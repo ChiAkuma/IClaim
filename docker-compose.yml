@@ -1,0 +1,64 @@
+version: "3"
+services:
+  papermc-server:
+    entrypoint: java -Xmx3G -jar /server/paper.jar
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+    ports:
+      - "25565:25565"
+      - "25575:25575"
+      - "34711:34711"
+    container_name: papermc-testplugin-${artifactId}
+    volumes:
+      - .server-data:/server
+      - type: bind
+        source: target/${artifactId}-${version}.jar
+        target: /server/plugins/${artifactId}.jar
+    networks:
+      vpcbr:
+        ipv4_address: 12.5.0.3
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: 2222
+      MARIADB_DATABASE: minecraft
+      MARIADB_USER: minecraft
+      MARIADB_PASSWORD: minecraft
+    ports:
+      - "3306:3306"
+    networks:
+      vpcbr:
+        ipv4_address: 12.5.0.2
+  dbgate:
+    image: dbgate/dbgate
+    ports:
+      - 80:3000
+    volumes:
+      - dbgate-data:/root/.dbgate
+    environment:
+      CONNECTIONS: con1
+
+      LABEL_con1: minecraft
+      SERVER_con1: 12.5.0.2
+      USER_con1: minecraft
+      PASSWORD_con1: minecraft
+      PORT_con1: 3306
+      ENGINE_con1: mariadb@dbgate-plugin-mysql
+      DATABASE_con1: minecraft
+    networks:
+      vpcbr:
+        ipv4_address: 12.5.0.4
+
+volumes:
+  dbgate-data:
+    driver: local
+
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 12.5.0.0/16
+          gateway: 12.5.0.1

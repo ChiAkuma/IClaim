@@ -1,0 +1,11 @@
+name: IClaim
+version: '${project.version}'
+main: de.chiakuma.iclaim.IClaim
+api-version: 1.19
+authors: [ ChiAkuma ]
+description: This plugin lets you claim your Area how you want. It does have settings to setup per-Block cost and even a new NON-FROM-TOP-TO-BEDROCK approach. If ya know what it means ;)
+website: plugins.chiakuma.de
+commands:
+  iclaim:
+    usage: /iclaim
+    description: jaa ne is klar
