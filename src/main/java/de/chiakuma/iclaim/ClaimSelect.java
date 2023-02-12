@@ -179,9 +179,9 @@ public class ClaimSelect implements Runnable
         //If no shifting position is found the shifting variables are not set, so we abort and break here
         if (x_shift == 0 | z_shift == 0) return;
         //Loops through the blocks between the selection points and sets the particles
-        //For x axis. So 2 Walls
+        //For x-axis. So 2 Walls
         //pos1 x = 10 | pos2 x = 30
-        //:(x now is 5; 5 < 22; x += direction of the xshift)
+        //:(x now is 5; 5 < 22; x += direction of the x-shift)
         //So it will loop 22 times through and places particles
         //Edge case: pos1 x = 30 | pos2 x = 10 ||| Is also 20 ;)
         for (int x = 0; Math.abs(x) < Math.floor(Math.abs(pos1.getX() - pos2.getX())) +2; x += x_shift)
