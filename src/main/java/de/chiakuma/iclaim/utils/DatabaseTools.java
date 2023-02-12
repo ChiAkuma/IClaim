@@ -90,7 +90,10 @@ public class DatabaseTools
         query[2] = "CREATE TABLE IF NOT EXISTS IClaim_claim_builders(" +
                 "claimID INT REFERENCES IClaim_claims(claimID), " +
                 "builder INT REFERENCES IClaim_players(playerID))";
-        query[3] = "CREATE TABLE IF NOT EXISTS IClaim_auctionHouse(" +
+        query[3] = "CREATE TABLE IF NOT EXISTS IClaim_claim_banned(" +
+                "claimID INT REFERENCES IClaim_claims(claimID), " +
+                "bannedPlayer INT REFERENCES IClaim_players(playerID))";
+        query[4] = "CREATE TABLE IF NOT EXISTS IClaim_auctionHouse(" +
                 "auctionID INT NOT NULL AUTO_INCREMENT, " +
                 "claimID INT REFERENCES IClaim_claims(claimID), " +
                 "startingPrice INT, " +
@@ -103,7 +106,7 @@ public class DatabaseTools
                 "forSale BOOL, " +
                 "created DATE, " +
                 "PRIMARY KEY (auctionID))";
-        query[4] = "CREATE TABLE IF NOT EXISTS IClaim_auctionHouse_BIDs(" +
+        query[5] = "CREATE TABLE IF NOT EXISTS IClaim_auctionHouse_BIDs(" +
                 "playerID INT REFERENCES IClaim_players(playerID), " +
                 "auctionID INT REFERENCES IClaim_auctionHouse(auctionID), " +
                 "BIDAmount INT, " +
