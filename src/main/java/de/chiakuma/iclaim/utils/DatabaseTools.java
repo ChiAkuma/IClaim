@@ -72,7 +72,7 @@ public class DatabaseTools
     public boolean createTables()
     {
         //Creating all the tables for this plugin
-        String[] query = new String[5];
+        String[] query = new String[6];
         query[0] = "CREATE TABLE IF NOT EXISTS IClaim_players(" +
                 "playerID INT NOT NULL AUTO_INCREMENT, " +
                 "playerName TEXT, " +
