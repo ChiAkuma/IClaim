@@ -1,7 +1,6 @@
 version: "3"
 services:
   papermc-server:
-    entrypoint: java -Xmx3G -jar /server/paper.jar
     stdin_open: true
     tty: true
     build:

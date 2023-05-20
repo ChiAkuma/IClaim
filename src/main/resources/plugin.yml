@@ -1,11 +1,13 @@
 name: IClaim
 version: '${project.version}'
-main: de.chiakuma.iclaim.IClaim
+main: de.chiakuma.iclaim.Plugin_IClaim
 api-version: 1.19
 authors: [ ChiAkuma ]
-description: This plugin lets you claim your Area how you want. It does have settings to setup per-Block cost and even a new NON-FROM-TOP-TO-BEDROCK approach. If ya know what it means ;)
+description: Allows players to claim and manage chunks of land on the server
 website: plugins.chiakuma.de
 commands:
   iclaim:
     usage: /iclaim
     description: jaa ne is klar
+    aliases:
+      - icm

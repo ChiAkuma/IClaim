@@ -1,10 +1,8 @@
 package de.chiakuma.iclaim;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -15,32 +13,31 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class IClaimWand extends ItemStack implements Listener {
+public class ITEM_Wand extends ItemStack implements Listener {
 
-    Component displayName =
-            Component.text("[", Style.style().decoration(TextDecoration.ITALIC, false).build())
-                    .append(Component.text("IClaimWand", Style.style().color(TextColor.color(255, 165, 50)).build()))
-                    .append(Component.text("]", Style.style().decoration(TextDecoration.ITALIC, false).build()));
+    Component name = Component.text("[").color(TextColor.color(255, 182, 0)).
+            append(Component.text("IClaim").color(TextColor.color(255, 136, 43))).
+            append(Component.text("Wand").color(TextColor.color(255, 84, 0))).
+            append(Component.text("]").color(TextColor.color(255, 182, 0)));
     AttributeModifier data = new AttributeModifier(UUID.randomUUID(), "IClaimWand_372475328027476700378", 1,  AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
 
-    /***
-     * Defines, Initializes the ItemStack of the IClaimWand to get it back or use it in other places
-     * it also adds all the important Events for this tool itself.
-     */
-    public IClaimWand()
+    public ITEM_Wand()
     {
-        //Define IClaim Tool
+        //Definition of the Item
         super(Material.GOLDEN_SHOVEL, 1);
+        this.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS);
         ItemMeta meta = this.getItemMeta();
-        meta.displayName(displayName);
+        meta.displayName(name);
         meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, data);
         this.setItemMeta(meta);
         //this.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -59,7 +56,7 @@ public class IClaimWand extends ItemStack implements Listener {
             if (item != null) {
                 if (item.containsEnchantment(Enchantment.VANISHING_CURSE)
                         && item.hasItemMeta()
-                        && Objects.equals(item.getItemMeta().displayName(), displayName)
+                        && Objects.equals(item.getItemMeta().displayName(), name)
                         && item.getItemMeta().hasAttributeModifiers()
                         && !Objects.requireNonNull(item.getItemMeta().getAttributeModifiers()).isEmpty()
                 )
@@ -76,39 +73,21 @@ public class IClaimWand extends ItemStack implements Listener {
         return false;
     }
 
-    //All the events this Item triggers and uses
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent e)
+    public void onPlayerInteractEvent(PlayerInteractEvent e)
     {
-        ClaimSelect cs = IClaim.perPlayerInstances.get(e.getPlayer().getUniqueId());
         boolean isCancelled = false;
         e.setCancelled(true);
         isCancelled = this.checkItem(e.getItem());
-        if (isCancelled)
+
+        Player p = e.getPlayer();
+        switch (e.getAction())
         {
-            //Debug
-            e.getPlayer().sendMessage(e.getAction().toString());
-            switch (e.getAction())
-            {
-                case LEFT_CLICK_AIR:
-                    //TODO
-                    cs.setLocation(1, cs.rayCastPos());
-                    break;
-                case RIGHT_CLICK_AIR:
-                    //TODO
-                    cs.setLocation(2, cs.rayCastPos());
-                    break;
-                case LEFT_CLICK_BLOCK:
-                    //TODO
-                    e.getPlayer().sendMessage("Hallo");
-                    cs.setLocation(1, e.getClickedBlock().getLocation());
-                    break;
-                case RIGHT_CLICK_BLOCK:
-                    //TODO
-                    e.getPlayer().sendMessage("Tschüss");
-                    cs.setLocation(2, e.getClickedBlock().getLocation());
-                    break;
-            }
+            case LEFT_CLICK_AIR -> p.sendMessage("LEFT_CLICK_AIR");
+            case LEFT_CLICK_BLOCK -> p.sendMessage("LEFT_CLICK_BLOCK");
+            case RIGHT_CLICK_AIR -> p.sendMessage("RIGHT_CLICK_AIR");
+            case RIGHT_CLICK_BLOCK -> p.sendMessage("RIGHT_CLICK_BLOCK");
+            case PHYSICAL -> p.sendMessage("PHYSICAL");
         }
 
         e.setCancelled(isCancelled);
