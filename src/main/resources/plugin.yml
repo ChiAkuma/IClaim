@@ -1,13 +1,19 @@
-name: IClaim
+name: GriefPrevention
 version: '${project.version}'
-main: de.chiakuma.iclaim.Plugin_IClaim
+main: de.chiakuma.gprev.GriefPrevention
 api-version: 1.19
 authors: [ ChiAkuma ]
 description: Allows players to claim and manage chunks of land on the server
 website: plugins.chiakuma.de
 commands:
-  iclaim:
-    usage: /iclaim
+  griefprevention:
+    usage: /gp
     description: jaa ne is klar
     aliases:
-      - icm
+      - gpv
+  claim:
+    usage: /claim
+    description: jaa ne is klar
+    aliases:
+      - c
+

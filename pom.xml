@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.chiakuma.iclaim</groupId>
-    <artifactId>IClaim</artifactId>
-    <version>1.0.0</version>
+    <artifactId>GriefPrevention</artifactId>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <description>This plugin lets you claim your Area how you want. It does have settings to setup per-Block cost and
